@@ -97,25 +97,25 @@ const PRESUPUESTO = 500;
                         ?>
                         <tr class="d-block d-md-table-row">
                             <td class="d-block d-md-table-cell">
-                                <strong>#</strong>: <?php echo $contador?>
+                                <strong class="thead-responsive">#:</strong> <?php echo $contador?>
                             </td>
                             <td class="d-block d-md-table-cell">
-                                <strong>FECHA</strong>: <?php echo convertirFecha($row['fecha']); ?>
+                                <strong class="thead-responsive">FECHA:</strong> <?php echo convertirFecha($row['fecha']); ?>
                             </td>
                             <td class="d-block d-md-table-cell">
-                                <strong>GASTO</strong>: <?php echo $row['gasto']; ?>
+                                <strong class="thead-responsive">GASTO:</strong> <?php echo $row['gasto']; ?>
                             </td>
                             <td class="d-block d-md-table-cell">
-                                <strong>TIPO</strong>: <?php echo $row['tipo']; ?>
+                                <strong class="thead-responsive">TIPO:</strong> <?php echo $row['tipo']; ?>
                             </td>
                             <td class="d-block d-md-table-cell">
-                                <strong>BASE</strong>: <?php echo redondearADosDecimales($base).'€'; ?>
+                                <strong class="thead-responsive">BASE:</strong> <?php echo redondearADosDecimales($base).'€'; ?>
                             </td>
                             <td class="d-block d-md-table-cell">
-                                <strong>IVA</strong>: <?php echo redondearADosDecimales($ivaCalculado).'€'; ?>
+                                <strong class="thead-responsive">IVA:</strong> <?php echo redondearADosDecimales($ivaCalculado).'€'; ?>
                             </td>
                             <td class="d-block d-md-table-cell">
-                                <strong>MONTO</strong>: <?php echo redondearADosDecimales($monto).'€'; ?>
+                                <strong class="thead-responsive">MONTO:</strong> <?php echo redondearADosDecimales($monto).'€'; ?>
                             </td>
                             <td class="d-block d-md-table-cell">
                                 <form action="procesar.php" method="POST">
@@ -181,5 +181,25 @@ const PRESUPUESTO = 500;
         ?>
 </div>
 </body>
+<script>
+    function ajustarDisplayEnPantalla() {
 
+    const elementos = document.querySelectorAll('.thead-responsive');
+
+    if (window.innerWidth > 767) {
+        elementos.forEach(elemento => {
+            elemento.style.display = 'none';
+        });
+    } else {
+        elementos.forEach(elemento => {
+            elemento.style.display = '';
+        });
+    }
+}
+
+window.addEventListener('load', ajustarDisplayEnPantalla);
+window.addEventListener('resize', ajustarDisplayEnPantalla);
+
+
+</script>
 </html>
