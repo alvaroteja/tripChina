@@ -40,6 +40,14 @@ function redondearADosDecimales($texto) {
     return number_format($numero_redondeado, 2, '.', '');
 }
 
+function convertirFecha($fecha) {
+    // Crear un objeto DateTime a partir de la fecha dada
+    $date = new DateTime($fecha);
+
+    // Formatear la fecha al formato deseado: "d/m/Y h:i:s a"
+    return $date->format('d/m/Y h:i:s a');
+}
+
 //Funciones para debug
 function echoDebugInfo($message){
     if (DEBUGER_ON) {

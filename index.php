@@ -100,7 +100,7 @@ const PRESUPUESTO = 500;
                                 <strong>#</strong>: <?php echo $contador?>
                             </td>
                             <td class="d-block d-md-table-cell">
-                                <strong>FECHA</strong>: <?php echo $row['fecha']; ?>
+                                <strong>FECHA</strong>: <?php echo convertirFecha($row['fecha']); ?>
                             </td>
                             <td class="d-block d-md-table-cell">
                                 <strong>GASTO</strong>: <?php echo $row['gasto']; ?>

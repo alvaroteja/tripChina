@@ -159,7 +159,7 @@ table button:hover {
   }
 
   .table thead {
-    display: none; /* Ocultar el thead en dispositivos pequeños */
+    display: none;
   }
 
   .table td {
@@ -177,7 +177,6 @@ table button:hover {
     font-weight: bold;
   }
 
-  /* Asegurarse de que el total se vea bien en dispositivos pequeños */
   #total-td {
     text-align: center;
   }
