@@ -67,94 +67,111 @@ const PRESUPUESTO = 500;
 
         if ($result->num_rows > 0) {
         ?>
-        <div class="container mt-4"> <div class="table-responsive">
-            <table class="table table-striped table-bordered">
-                <thead class="">
-                    <tr id="thead-tr-id">
-                        <th class="thead-th-id">#</th>
-                        <th class="thead-th-id">FECHA</th>
-                        <th class="thead-th-id">GASTO</th>
-                        <th class="thead-th-id">TIPO</th>
-                        <th class="thead-th-id">BASE</th>
-                        <th class="thead-th-id">IVA</th>
-                        <th class="thead-th-id">MONTO</th>
-                        <th class="thead-th-id">OCULTAR</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    $contador = 0;
-                    $total = 0;
-                    while ($row = $result->fetch_assoc()) {
-                        $contador++;
-                        $monto = $row['monto'];
-                        $total  += $monto;
-                        $ivaEspecifico = obtenerIva($row['tipo']);
-                        $ivaCalculado = $monto * ($ivaEspecifico/100);
-                        $base = $monto - $ivaCalculado;
-                        if (!$row['ocultar']) {
-                            ?>
-                            <tr>
-                                <td><?php echo $contador?></td>
-                                <td><?php echo $row['fecha']; ?></td>
-                                <td><?php echo $row['gasto']; ?></td>
-                                <td><?php echo $row['tipo']; ?></td>
-                                <td><?php echo redondearADosDecimales($base).'€'; ?></td>
-                                <td><?php echo redondearADosDecimales($ivaCalculado).'€'; ?></td>
-                                <td><?php echo redondearADosDecimales($monto).'€'; ?></td>
-                                <td>
-                                    <form action="procesar.php" type="submit" method="POST">
-                                        <input type="hidden" id="accion" name="accion" value="ocultar">
-                                        <input type="hidden" id="ocultar-id" name="id" value="<?php echo $row['id']; ?>">
-                                        <input type="hidden" id="ocultar-gasto" name="gasto" value="<?php echo $row['gasto']; ?>">
-                                        <input type="hidden" id="valor-actual-ocultar-id" name="valor-actual-ocultar" value="<?php echo $row['ocultar']; ?>">
-                                        <button class="btn btn-sm">
-                                            <i class="fa-regular fa-eye"></i>
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                            <?php
-                        }else{
-                            ?>
-                            <tr>
-                                <td colspan="7" class="celda-oculta"><h3>Este registro está oculto...</h3></td>
-                                <td>
-                                    <form action="procesar.php" type="submit" method="POST">
-                                        <input type="hidden" id="accion" name="accion" value="ocultar">
-                                        <input type="hidden" id="ocultar-id" name="id" value="<?php echo $row['id']; ?>">
-                                        <input type="hidden" id="ocultar-gasto" name="gasto" value="<?php echo $row['gasto']; ?>">
-                                        <input type="hidden" id="valor-actual-ocultar-id" name="valor-actual-ocultar" value="<?php echo $row['ocultar']; ?>">
-                                        <button class="btn btn-sm">
-                                            <i class="fa-regular fa-eye-slash"></i>
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                            <?php
-                        }
+        <div class="container mt-4">
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr id="thead-tr-id">
+                    <th class="thead-th-id">#</th>
+                    <th class="thead-th-id">FECHA</th>
+                    <th class="thead-th-id">GASTO</th>
+                    <th class="thead-th-id">TIPO</th>
+                    <th class="thead-th-id">BASE</th>
+                    <th class="thead-th-id">IVA</th>
+                    <th class="thead-th-id">MONTO</th>
+                    <th class="thead-th-id">OCULTAR</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $contador = 0;
+                $total = 0;
+                while ($row = $result->fetch_assoc()) {
+                    $contador++;
+                    $monto = $row['monto'];
+                    $total  += $monto;
+                    $ivaEspecifico = obtenerIva($row['tipo']);
+                    $ivaCalculado = $monto * ($ivaEspecifico/100);
+                    $base = $monto - $ivaCalculado;
+                    if (!$row['ocultar']) {
+                        ?>
+                        <tr class="d-block d-md-table-row">
+                            <td class="d-block d-md-table-cell">
+                                <strong>#</strong>: <?php echo $contador?>
+                            </td>
+                            <td class="d-block d-md-table-cell">
+                                <strong>FECHA</strong>: <?php echo $row['fecha']; ?>
+                            </td>
+                            <td class="d-block d-md-table-cell">
+                                <strong>GASTO</strong>: <?php echo $row['gasto']; ?>
+                            </td>
+                            <td class="d-block d-md-table-cell">
+                                <strong>TIPO</strong>: <?php echo $row['tipo']; ?>
+                            </td>
+                            <td class="d-block d-md-table-cell">
+                                <strong>BASE</strong>: <?php echo redondearADosDecimales($base).'€'; ?>
+                            </td>
+                            <td class="d-block d-md-table-cell">
+                                <strong>IVA</strong>: <?php echo redondearADosDecimales($ivaCalculado).'€'; ?>
+                            </td>
+                            <td class="d-block d-md-table-cell">
+                                <strong>MONTO</strong>: <?php echo redondearADosDecimales($monto).'€'; ?>
+                            </td>
+                            <td class="d-block d-md-table-cell">
+                                <form action="procesar.php" method="POST">
+                                    <input type="hidden" id="accion" name="accion" value="ocultar">
+                                    <input type="hidden" id="ocultar-id" name="id" value="<?php echo $row['id']; ?>">
+                                    <input type="hidden" id="ocultar-gasto" name="gasto" value="<?php echo $row['gasto']; ?>">
+                                    <input type="hidden" id="valor-actual-ocultar-id" name="valor-actual-ocultar" value="<?php echo $row['ocultar']; ?>">
+                                    <button class="btn btn-sm">
+                                        <i class="fa-regular fa-eye"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        <?php
+                    } else {
+                        ?>
+                        <tr class="d-block d-md-table-row">
+                            <td colspan="7" class="celda-oculta"><h3>Este registro está oculto...</h3></td>
+                            <td class="d-block d-md-table-cell">
+                                <form action="procesar.php" method="POST">
+                                    <input type="hidden" id="accion" name="accion" value="ocultar">
+                                    <input type="hidden" id="ocultar-id" name="id" value="<?php echo $row['id']; ?>">
+                                    <input type="hidden" id="ocultar-gasto" name="gasto" value="<?php echo $row['gasto']; ?>">
+                                    <input type="hidden" id="valor-actual-ocultar-id" name="valor-actual-ocultar" value="<?php echo $row['ocultar']; ?>">
+                                    <button class="btn btn-sm">
+                                        <i class="fa-regular fa-eye-slash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        <?php
                     }
-                    ?>
-                    <tr>
-                        <td id="total-td" colspan="8">
-                            <h3>TOTAL &nbsp
-                            <span id="total" class="<?php
-                                if ($total < PRESUPUESTO*0.5) {
-                                    echo "totalOkContainer totalOk";
-                                }elseif ($total >= PRESUPUESTO * 0.5 && $total < PRESUPUESTO) {
-                                    echo "totalWarningContainer totalWarning";
-                                }else{
-                                    echo "totalDangerContainer totalDanger";
-                                }
-                            ?>">
-                            <?php echo redondearADosDecimales($total).'€'; ?>
-                            </span>
-                            </h3>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+                }
+                ?>
+                <tr class="d-block d-md-table-row">
+                    <td id="total-td" colspan="8">
+                        <h3>TOTAL &nbsp
+                        <span id="total" class="<?php
+                            if ($total < PRESUPUESTO*0.5) {
+                                echo "totalOkContainer totalOk";
+                            } elseif ($total >= PRESUPUESTO * 0.5 && $total < PRESUPUESTO) {
+                                echo "totalWarningContainer totalWarning";
+                            } else {
+                                echo "totalDangerContainer totalDanger";
+                            }
+                        ?>">
+                        <?php echo redondearADosDecimales($total).'€'; ?>
+                        </span>
+                        </h3>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
         <?php
         }else{
         ?>

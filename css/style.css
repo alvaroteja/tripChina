@@ -148,3 +148,37 @@ table button:hover {
   width: clamp(200px, 50%, 500px);
   margin: auto;
 }
+
+@media (max-width: 767px) {
+  .table td,
+  .table th {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 8px;
+  }
+
+  .table thead {
+    display: none; /* Ocultar el thead en dispositivos pequeños */
+  }
+
+  .table td {
+    position: relative;
+    text-align: center;
+    padding-top: 10px;
+    border-top: 1px solid #ddd;
+  }
+
+  .table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    font-weight: bold;
+  }
+
+  /* Asegurarse de que el total se vea bien en dispositivos pequeños */
+  #total-td {
+    text-align: center;
+  }
+}
